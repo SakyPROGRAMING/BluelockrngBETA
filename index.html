@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <meta name="theme-color" content="#121212">
+  <title>BlueLock RNG</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader" class="loader">
+  <div class="spinner"></div>
+  <p style="margin-top: 20px; font-size: 18px;">Cargando...</p>
+</div>
+
+<!-- AUTH SECTION -->
+<div id="auth-section" style="display: block; padding: 40px; text-align: center; background: #121212; min-height: 100vh;">
+  <h1>🎮 BlueLock RNG</h1>
+  <p style="color: #aaa; margin-bottom: 30px;">Inicia sesión o crea una cuenta</p>
+  
+  <div style="max-width: 400px; margin: 20px auto; background: rgba(65, 105, 225, 0.1); padding: 30px; border-radius: 10px; border: 2px solid #4169E1;">
+    <input type="email" id="email-input" placeholder="Email" style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #4169E1; border-radius: 5px; background: #1a1a1a; color: white;">
+    <input type="password" id="password-input" placeholder="Contraseña" style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #4169E1; border-radius: 5px; background: #1a1a1a; color: white;">
+    
+    <button id="login-btn" style="width: 100%; background: #4169E1; margin-top: 15px;">Iniciar Sesión</button>
+    <button id="signup-btn" style="width: 100%; background: #32CD32; margin-top: 10px;">Registrarse</button>
+  </div>
+</div>
+
+<!-- GAME SECTION -->
+<div id="game" style="display: none; padding: 20px; background: #121212; color: white; min-height: 100vh; display: flex; flex-direction: column;">
+  <div id="header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; margin-bottom: 20px;">
+    <div>
+      <h1 style="margin: 0;">🎮 BlueLock RNG</h1>
+      <p style="font-size: 18px; margin: 5px 0;">💰 <span id="money-display">0</span></p>
+    </div>
+    
+    <div id="spin-buttons" style="display: flex; flex-wrap: wrap; gap: 8px;">
+      <button id="spin-normal" style="padding: 10px 15px; background: #4169E1; border: none; border-radius: 5px; color: white; cursor: pointer; font-weight: bold;">🎰 Normal (50)</button>
+      <button id="spin-lucky" style="padding: 10px 15px; background: #4169E1; border: none; border-radius: 5px; color: white; cursor: pointer; font-weight: bold;">🍀 Lucky (500)</button>
+      <button id="spin-master" style="padding: 10px 15px; background: #FF8C00; border: none; border-radius: 5px; color: white; cursor: pointer; font-weight: bold;">🔥 Master (2000)</button>
+      <button id="spin-kuon" style="padding: 10px 15px; background: #FF1493; border: none; border-radius: 5px; color: white; cursor: pointer; font-weight: bold;">🎯 Kuon (5000)</button>
+      <button id="sell-all-btn" style="padding: 10px 15px; background: #32CD32; border: none; border-radius: 5px; color: white; cursor: pointer; font-weight: bold;">💸 SELL ALL</button>
+      <button id="trade-btn" style="padding: 10px 15px; background: #FFD700; border: none; border-radius: 5px; color: black; cursor: pointer; font-weight: bold;">🤝 TRADE</button>
+      <button id="reset-btn" style="padding: 10px 15px; background: #FF4500; border: none; border-radius: 5px; color: white; cursor: pointer; font-weight: bold;">🔄 RESET</button>
+      <button id="vol-up" style="padding: 10px 15px; background: #666; border: none; border-radius: 5px; color: white; cursor: pointer; font-weight: bold;">🔊</button>
+      <button id="vol-down" style="padding: 10px 15px; background: #666; border: none; border-radius: 5px; color: white; cursor: pointer; font-weight: bold;">🔉</button>
+      <button id="notifications-btn" style="padding: 10px 15px; background: #666; border: none; border-radius: 5px; color: white; cursor: pointer; font-weight: bold;">🔔</button>
+      <button id="logout-btn" style="padding: 10px 15px; background: #8B0000; border: none; border-radius: 5px; color: white; cursor: pointer; font-weight: bold;">🚪 Logout</button>
+    </div>
+  </div>
+  
+  <!-- NOTIFICACIONES -->
+  <div id="notifications-panel" style="display: none; position: fixed; right: 20px; top: 100px; width: 300px; max-height: 400px; background: rgba(18, 18, 18, 0.95); border: 2px solid #FF1493; border-radius: 10px; padding: 15px; overflow-y: auto; z-index: 100;">
+    <h3 style="margin-bottom: 10px;">🔔 Notificaciones</h3>
+    <div id="notifications-list"></div>
+  </div>
+  
+  <p id="result" style="margin: 20px 0; font-size: 20px; text-align: center; color: #FFD700;">Te tocó: Ninguno</p>
+  <img id="character-img" src="" style="display:none; width:150px; margin: 20px auto; border-radius: 10px; box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);">
+  
+  <div id="main-panels" style="display: flex; margin-top: 20px; gap: 10px; flex-wrap: wrap; flex: 1;">
+    <div id="instructions" style="flex: 0 0 30%; min-width: 280px; background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; border: 2px solid #4169E1; height: fit-content;">
+      <h3>📖 Instrucciones</h3>
+      <ul style="line-height: 1.8; font-size: 14px;">
+        <li>💰 Usa monedas para hacer spins</li>
+        <li>💸 SELL ALL vende todo</li>
+        <li>🖱️ Click en personajes para vender</li>
+        <li>📦 Arrastra a caja fuerte para guardar</li>
+        <li>🤝 TRADE para tradear con otros</li>
+      </ul>
+      
+      <div id="code-section" style="margin-top: 20px;">
+        <input type="text" id="codigo-input" placeholder="Código secreto" style="width: 100%; padding: 8px; border: 1px solid #4169E1; border-radius: 5px; background: #1a1a1a; color: white; margin-bottom: 10px;">
+        <button id="codigo-btn" style="width: 100%; background: #FF1493; padding: 10px; border: none; border-radius: 5px; color: white; font-weight: bold; cursor: pointer;">💎 CANJEAR</button>
+      </div>
+    </div>
+    
+    <div id="inventory" style="flex: 1.5; min-width: 250px; min-height: 300px; border: 2px solid #4169E1; padding: 15px; border-radius: 10px; overflow-y: auto; background: rgba(65, 105, 225, 0.05);"><h3>📦 Inventario</h3></div>
+    <div id="safe" style="flex: 1; min-width: 200px; min-height: 300px; border: 2px solid #FFD700; padding: 15px; border-radius: 10px; overflow-y: auto; background: rgba(255, 215, 0, 0.05);"><h3>🏦 Caja Fuerte</h3></div>
+  </div>
+  
+  <div id="index" style="width: 100%; margin-top: 20px; border: 2px solid #FF1493; padding: 15px; border-radius: 10px; background: rgba(255, 20, 147, 0.05);">
+    <h3>📖 Índice de personajes</h3>
+    <div id="index-list" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer style="background: rgba(65, 105, 225, 0.2); border-top: 2px solid #4169E1; padding: 20px; text-align: center; margin-top: auto;">
+  <p style="margin: 8px 0; font-size: 13px; color: #FFD700; font-weight: bold;">UPD 1.3.6 (17/03/2026) - Trades y compatibilidad en celular</p>
+  <p style="margin: 8px 0; font-size: 11px; color: #aaa;">© Estudios Saky. Todos los derechos reservados.</p>
+  <p style="margin: 8px 0; font-size: 10px; color: #888; line-height: 1.6;">
+    ⚠️ La distribución ilegal, copia, modificación o reproducción no autorizada de este juego está prohibida por la <strong>Ley de Propiedad Intelectual (Real Decreto Legislativo 1/1996)</strong> del Gobierno de España. Los infractores serán perseguidos legalmente.
+  </p>
+</footer>
+
+<!-- TRADE MODAL -->
+<div id="trade-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.9); z-index: 10000; align-items: center; justify-content: center; flex-direction: column;">
+  <div style="background: linear-gradient(135deg, #1f1f1f 0%, #2a2a2a 100%); border: 2px solid #FF1493; border-radius: 10px; padding: 20px; max-width: 800px; width: 90%; max-height: 80vh; overflow-y: auto;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+      <h2>🤝 SISTEMA DE TRADEOS</h2>
+      <button onclick="document.getElementById('trade-modal').style.display='none'" style="background: #FF1493; padding: 5px 15px;">✕ Cerrar</button>
+    </div>
+    
+    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+      <!-- Mi Inventario -->
+      <div style="flex: 1; min-width: 300px; border: 1px solid #4169E1; padding: 15px; border-radius: 10px;">
+        <h3>📦 Selecciona qué ofrecer:</h3>
+        <div id="trade-inventory-list" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
+      </div>
+      
+      <!-- Tradeos Pendientes -->
+      <div style="flex: 1; min-width: 300px; border: 1px solid #FFD700; padding: 15px; border-radius: 10px;">
+        <h3>📋 Solicitudes Pendientes:</h3>
+        <div id="trade-pending-list" style="margin-top: 10px;"></div>
+      </div>
+    </div>
+    
+    <div style="margin-top: 20px; text-align: center;">
+      <input type="email" id="trade-receiver-email" placeholder="Email del jugador a quien tradear" style="width: 100%; margin-bottom: 10px; padding: 10px; border: 1px solid #4169E1; border-radius: 5px; background: #1a1a1a; color: white;">
+      <button id="trade-send-btn" style="width: 100%; background: #32CD32; padding: 12px; border: none; border-radius: 5px; color: white; font-weight: bold; cursor: pointer;">🚀 ENVIAR SOLICITUD DE TRADEO</button>
+    </div>
+  </div>
+</div>
+
+<!-- VIDEO KAISER -->
+<video id="kaiser-video" autoplay style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); width:80%; max-width:900px; z-index:999; border-radius: 10px;"></video>
+
+<script type="module" src="js/main.js"></script>
+
+</body>
+</html>

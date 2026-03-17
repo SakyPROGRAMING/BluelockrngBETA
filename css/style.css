@@ -1,0 +1,414 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background: #121212;
+  color: white;
+  overflow-x: hidden;
+}
+
+/* ===== LOADER ===== */
+.loader {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.spinner {
+  border: 5px solid rgba(65, 105, 225, 0.3);
+  border-top: 5px solid #4169E1;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ===== INPUTS ===== */
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 2px solid #4169E1;
+  border-radius: 5px;
+  background: #1a1a1a;
+  color: white;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="text"]:focus {
+  outline: none;
+  box-shadow: 0 0 10px rgba(65, 105, 225, 0.8);
+  border-color: #FF1493;
+}
+
+/* ===== BUTTONS ===== */
+button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+  color: white;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+}
+
+#login-btn, #signup-btn {
+  width: 100%;
+  margin-top: 10px;
+}
+
+#login-btn {
+  background: #4169E1;
+}
+
+#signup-btn {
+  background: #32CD32;
+}
+
+/* ===== CHARACTER CARDS ===== */
+.char-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  border: 2px solid #FFD700;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  background: rgba(255, 215, 0, 0.05);
+  min-width: 100px;
+}
+
+.char-card:hover {
+  transform: scale(1.1);
+}
+
+.char-card img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-bottom: 8px;
+}
+
+.char-card small {
+  font-size: 12px;
+  text-align: center;
+  word-wrap: break-word;
+}
+
+/* ===== MODAL DE TRADING ===== */
+#trade-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 10000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+#trade-modal > div {
+  background: linear-gradient(135deg, #1f1f1f 0%, #2a2a2a 100%);
+  border: 3px solid #FF1493;
+  border-radius: 15px;
+  padding: 30px;
+  max-width: 900px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 0 30px rgba(255, 20, 147, 0.5);
+}
+
+.trade-char-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  border: 2px solid #4169E1;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  background: rgba(65, 105, 225, 0.1);
+}
+
+.trade-char-item:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px rgba(65, 105, 225, 0.8);
+}
+
+.trade-char-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+.trade-char-item small {
+  font-size: 12px;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.trade-char-item input[type="checkbox"] {
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+}
+
+.trade-request-item {
+  padding: 12px;
+  border: 2px solid #4169E1;
+  margin: 10px 0;
+  border-radius: 8px;
+  background: rgba(65, 105, 225, 0.1);
+}
+
+.trade-request-item p {
+  margin: 8px 0;
+  font-size: 14px;
+}
+
+.trade-accept-btn,
+.trade-decline-btn {
+  width: 48%;
+  margin: 5px 1%;
+  padding: 8px;
+  font-size: 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.trade-accept-btn {
+  background: #32CD32;
+  color: white;
+}
+
+.trade-accept-btn:hover {
+  box-shadow: 0 0 15px #32CD32;
+}
+
+.trade-decline-btn {
+  background: #FF1493;
+  color: white;
+}
+
+.trade-decline-btn:hover {
+  box-shadow: 0 0 15px #FF1493;
+}
+
+#trade-inventory-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+#trade-send-btn {
+  background: #32CD32 !important;
+  padding: 12px !important;
+  font-weight: bold !important;
+  width: 100%;
+}
+
+#trade-send-btn:hover {
+  box-shadow: 0 0 20px #32CD32 !important;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  background: rgba(65, 105, 225, 0.2);
+  border-top: 2px solid #4169E1;
+  padding: 20px;
+  text-align: center;
+  margin-top: auto;
+}
+
+footer p {
+  margin: 8px 0;
+}
+
+footer p:first-child {
+  font-size: 13px;
+  color: #FFD700;
+  font-weight: bold;
+}
+
+footer p:nth-child(2) {
+  font-size: 11px;
+  color: #aaa;
+}
+
+footer p:nth-child(3) {
+  font-size: 10px;
+  color: #888;
+  line-height: 1.6;
+}
+
+footer strong {
+  color: #FFD700;
+}
+
+/* ===== RESPONSIVE SOLO EN MÓVIL (MAX 768px) ===== */
+@media (max-width: 768px) {
+  /* Inputs más grandes */
+  input[type="email"],
+  input[type="password"],
+  input[type="text"] {
+    font-size: 16px;
+    padding: 14px;
+  }
+
+  /* Botones más grandes en móvil */
+  button {
+    min-height: 44px;
+    font-size: 12px;
+  }
+
+  /* Header responsivo */
+  #header {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  #header h1 {
+    font-size: 1.3rem;
+  }
+
+  /* Botones de spin más pequeños en móvil */
+  #spin-buttons button {
+    flex: 1;
+    min-width: 60px;
+    font-size: 11px;
+    padding: 6px;
+  }
+
+  /* Cartas más pequeñas en móvil */
+  .char-card {
+    min-width: 75px;
+    padding: 6px;
+  }
+
+  .char-card img {
+    width: 65px;
+    height: 65px;
+  }
+
+  .char-card small {
+    font-size: 10px;
+  }
+
+  /* Paneles en móvil */
+  #main-panels {
+    flex-direction: column;
+  }
+
+  #instructions {
+    flex: 0 0 100% !important;
+  }
+
+  #inventory, #safe {
+    flex: 1 !important;
+    max-height: 300px;
+  }
+
+  /* Notificaciones en móvil */
+  #notifications-panel {
+    position: fixed;
+    right: 0;
+    left: 0;
+    top: auto;
+    bottom: 0;
+    width: 100%;
+    max-height: 60vh;
+    border-radius: 15px 15px 0 0;
+  }
+
+  /* Modal de trading en móvil */
+  #trade-modal > div {
+    padding: 15px;
+    max-width: 100%;
+  }
+
+  #trade-modal h2 {
+    font-size: 1rem;
+  }
+
+  .trade-char-item {
+    min-width: 65px;
+    padding: 6px;
+  }
+
+  .trade-char-item img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .trade-char-item small {
+    font-size: 10px;
+  }
+
+  /* Video Kaiser en móvil */
+  #kaiser-video {
+    width: 95%;
+    max-height: 70vh;
+  }
+
+  /* Footer en móvil */
+  footer {
+    padding: 15px;
+  }
+
+  footer p {
+    margin: 5px 0;
+  }
+
+  footer p:first-child {
+    font-size: 12px;
+  }
+
+  footer p:nth-child(2) {
+    font-size: 10px;
+  }
+
+  footer p:nth-child(3) {
+    font-size: 9px;
+    line-height: 1.5;
+  }
+}

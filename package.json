@@ -1,0 +1,34 @@
+{
+  "name": "bluelock-rng",
+  "version": "1.0.0",
+  "description": "Blue Lock RNG Game with Supabase Backend - Web-based character gacha game",
+  "main": "index.html",
+  "type": "module",
+  "scripts": {
+    "dev": "python -m http.server 8000",
+    "build": "echo 'No build required for this project'",
+    "start": "npm run dev"
+  },
+  "keywords": [
+    "bluelock",
+    "rng",
+    "gacha",
+    "game",
+    "web",
+    "supabase"
+  ],
+  "author": "SakyPROGRAMING",
+  "license": "MIT",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.38.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SakyPROGRAMING/bluelock-rng.git"
+  },
+  "homepage": "https://bluelock-rng.netlify.app",
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
